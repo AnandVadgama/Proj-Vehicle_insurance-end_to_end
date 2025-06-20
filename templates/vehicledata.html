@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Insurance Prediction</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+            padding: 32px 28px 24px 28px;
+            margin: 32px auto 0 auto;
+            max-width: 480px;
+        }
+        .form-section {
+            margin-bottom: 18px;
+        }
+        .form-section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #007bff;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+        .input-helper {
+            font-size: 0.85em;
+            color: #888;
+            margin-top: 2px;
+        }
+        .radio-group {
+            display: flex;
+            gap: 16px;
+            margin-top: 4px;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #aaa;
+            font-size: 0.95em;
+        }
+        .result {
+            margin-top: 28px;
+            padding: 18px 0 8px 0;
+            border-radius: 8px;
+            background: #f0f8ff;
+            box-shadow: 0 2px 8px rgba(0,123,255,0.07);
+        }
+        .result h2 {
+            color: #28a745;
+            font-size: 1.3em;
+        }
+    </style>
+</head>
+<body style="font-family: 'Roboto', Arial, sans-serif; background: #f4f6f8;">
+    <div class="container">
+        <div class="card">
+            <h1 style="margin-bottom: 18px;">🚗 Vehicle Insurance Prediction</h1>
+            <form method="post" action="/">
+                <div class="form-section">
+                    <div class="form-section-title">Personal Information</div>
+                    <div class="input-group">
+                        <label for="Gender">Gender:</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="Gender" value="1" required> Male</label>
+                            <label><input type="radio" name="Gender" value="0"> Female</label>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="Age">Age:</label>
+                        <input type="number" id="Age" name="Age" min="18" max="100" required>
+                        <span class="input-helper">Enter your age (18-100)</span>
+                    </div>
+                </div>
+                <div class="form-section">
+                    <div class="form-section-title">License & Insurance</div>
+                    <div class="input-group">
+                        <label for="Driving_License">Driving License:</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="Driving_License" value="1" required> Yes</label>
+                            <label><input type="radio" name="Driving_License" value="0"> No</label>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="Previously_Insured">Previously Insured:</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="Previously_Insured" value="1" required> Yes</label>
+                            <label><input type="radio" name="Previously_Insured" value="0"> No</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-section">
+                    <div class="form-section-title">Vehicle Details</div>
+                    <div class="input-group">
+                        <label for="Region_Code">Region Code:</label>
+                        <input type="number" step="0.01" id="Region_Code" name="Region_Code" required>
+                        <span class="input-helper">E.g., 28.0, 6.0, etc.</span>
+                    </div>
+                    <div class="input-group">
+                        <label for="Annual_Premium">Annual Premium:</label>
+                        <input type="number" step="0.01" id="Annual_Premium" name="Annual_Premium" required>
+                        <span class="input-helper">Your yearly insurance premium</span>
+                    </div>
+                    <div class="input-group">
+                        <label for="Policy_Sales_Channel">Policy Sales Channel:</label>
+                        <input type="number" step="0.01" id="Policy_Sales_Channel" name="Policy_Sales_Channel" required>
+                        <span class="input-helper">E.g., 26.0, 124.0, etc.</span>
+                    </div>
+                    <div class="input-group">
+                        <label for="Vintage">Vintage:</label>
+                        <input type="number" id="Vintage" name="Vintage" required>
+                        <span class="input-helper">Number of days customer has been associated</span>
+                    </div>
+                    <div class="input-group">
+                        <label>Vehicle Age:</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="Vehicle_Age_lt_1_Year" value="1" required> &lt; 1 Year</label>
+                            <label><input type="radio" name="Vehicle_Age_lt_1_Year" value="0"> Not &lt; 1 Year</label>
+                        </div>
+                        <div class="radio-group">
+                            <label><input type="radio" name="Vehicle_Age_gt_2_Years" value="1" required> &gt; 2 Years</label>
+                            <label><input type="radio" name="Vehicle_Age_gt_2_Years" value="0"> Not &gt; 2 Years</label>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="Vehicle_Damage_Yes">Vehicle Damage:</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="Vehicle_Damage_Yes" value="1" required> Yes</label>
+                            <label><input type="radio" name="Vehicle_Damage_Yes" value="0"> No</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit">🔮 Predict</button>
+            </form>
+            {% if context %}
+                <div class="result">
+                    {% if context == 'Response-Yes' %}
+                        <h2 style="color: #28a745; font-size: 1.5em; font-weight: 700; display: flex; flex-direction: column; align-items: center;">
+                            <span style="font-size:2em;">✅</span>
+                            Congratulations!<br> The customer is <span style="color:#218838;">likely</span> to buy insurance.
+                        </h2>
+                    {% elif context == 'Response-No' %}
+                        <h2 style="color: #dc3545; font-size: 1.5em; font-weight: 700; display: flex; flex-direction: column; align-items: center;">
+                            <span style="font-size:2em;">❌</span>
+                            Sorry!<br> The customer is <span style="color:#c82333;">unlikely</span> to buy insurance.
+                        </h2>
+                    {% else %}
+                        <h2>{{ context }}</h2>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="footer">
+            &copy; {{ 2025 }} Vehicle Insurance Predictor &mdash; Powered by FastAPI &amp; ML
+        </div>
+    </div>
+</body>
+</html>
