@@ -118,10 +118,10 @@ Proj-Vehicle_insurance-end_to_end/
 ## 🛠️ Tech Stack
 
 - **Python 3.10**
-- **Flask** (or FastAPI)
+- **FastAPI**
 - **scikit-learn**
 - **AWS S3, EC2**
 - **GitHub Actions** (or your CI/CD tool)
-- **Docker** (optional)
+- **Docker**
 
 ---
