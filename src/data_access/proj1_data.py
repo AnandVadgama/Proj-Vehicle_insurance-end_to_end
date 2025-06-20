@@ -55,3 +55,4 @@ class Proj1Data:
 
         except Exception as e:
             raise MyException(e, sys)
+        
