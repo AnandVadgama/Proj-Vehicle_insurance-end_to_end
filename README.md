@@ -253,7 +253,7 @@ pytest tests/
 ---
 
 ## 📬 Contact
-For questions, suggestions, or issues, please open an [issue](https://github.com/AnandVadgama/Proj-Vehicle_insurance-end_to_end/issues) or email [your.email@example.com](vadgamaanand6@gmail.com).
+For questions, suggestions, or issues, please open an [issue](https://github.com/AnandVadgama/Proj-Vehicle_insurance-end_to_end/issues) or email [vadgamaanand6@gmail.com](vadgamaanand6@gmail.com).
 
 ---
 
