@@ -3,8 +3,8 @@
 ![Python](https://img.shields.io/badge/Python-3.10-blue?logo=python)
 ![AWS](https://img.shields.io/badge/AWS-EC2%20%7C%20S3-orange?logo=amazon-aws)
 ![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-blueviolet?logo=github-actions)
-![License](https://img.shields.io/github/license/yourusername/Proj-Vehicle_insurance-end_to_end)
-![Last Commit](https://img.shields.io/github/last-commit/yourusername/Proj-Vehicle_insurance-end_to_end)
+![License](https://img.shields.io/github/license/AnandVadgama/Proj-Vehicle_insurance-end_to_end)
+![Last Commit](https://img.shields.io/github/last-commit/AnandVadgama/Proj-Vehicle_insurance-end_to_end)
 <!-- Add code coverage badge if available -->
 
 ---
