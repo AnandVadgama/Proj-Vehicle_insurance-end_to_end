@@ -201,9 +201,6 @@ graph TD;
 | Will Buy        | 0.87         |
 | Will Not Buy    | 0.13         |
 
-**Web App Screenshot:**
-![Web App Screenshot](static/example_screenshot.png) <!-- Replace with actual screenshot if available -->
-
 ---
 
 ## 🛠️ Tech Stack
@@ -249,11 +246,6 @@ pytest tests/
 
 ## 📚 Documentation
 - [Project Wiki](https://github.com/AnandVadgama/Proj-Vehicle_insurance-end_to_end) <!-- Add if available -->
-
----
-
-## 📬 Contact
-For questions, suggestions, or issues, please open an [issue](https://github.com/AnandVadgama/Proj-Vehicle_insurance-end_to_end/issues) or email [vadgamaanand6@gmail.com](vadgamaanand6@gmail.com).
 
 ---
 
