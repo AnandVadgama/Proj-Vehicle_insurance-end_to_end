@@ -152,22 +152,22 @@ graph TD;
    ```bash
    python app.py
    ```
-   The app will be available at [http://localhost:5000](http://localhost:5000).
+   The app will be available at [http://localhost:5080](http://localhost:5080).
 
 ---
 
 ## 🌐 Deployment on AWS EC2
 1. **Launch an EC2 instance** (Ubuntu recommended, t2.micro for testing; larger for production).
-2. **Open required ports** (e.g., 5000, 80) in the Security Group.
+2. **Open required ports** (e.g., 5080, 80) in the Security Group.
 3. **SSH into your instance** and clone the repo.
 4. **Install Python and dependencies.**
 5. **Set up AWS credentials** for S3 access (see [Configuration](#configuration)).
 6. **Run the app:**
    ```bash
-   python app.py --host 0.0.0.0 --port 5000
+   python app.py --host 0.0.0.0 --port 5080
    ```
 7. **Access the app** via your EC2 public IP:  
-   `http://<your-ec2-public-ip>:5000`
+   `http://<your-ec2-public-ip>:5080`
 
 ---
 
