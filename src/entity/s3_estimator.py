@@ -60,14 +60,7 @@ class Proj1Estimator:
         """
         try:
             if self.loaded_model is None:
-                if not self.is_model_present(self.model_path):
-                    raise FileNotFoundError(
-                        f"Model not found at '{self.model_path}' in bucket '{self.bucket_name}'. "
-                        "Please run the training pipeline first to train and push the model to S3."
-                    )
                 self.loaded_model = self.load_model()
             return self.loaded_model.predict(dataframe=dataframe)
-        except FileNotFoundError:
-            raise
         except Exception as e:
             raise MyException(e, sys)
