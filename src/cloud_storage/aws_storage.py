@@ -62,7 +62,7 @@ class SimpleStorageService:
             # Handle case where object_name is a list
             if isinstance(object_name, list):
                 if len(object_name) == 0:
-                    raise ValueError("Empty list of objects provided")
+                    raise FileNotFoundError("No S3 objects found. The requested file does not exist in the S3 bucket.")
                 object_name = object_name[0]
             
             # Read and decode the object content if decode=True
@@ -105,15 +105,21 @@ class SimpleStorageService:
 
         Returns:
             Union[List[object], object]: The S3 file object or list of file objects.
+        
+        Raises:
+            MyException: If the file is not found in the bucket.
         """
         logging.info("Entered the get_file_object method of SimpleStorageService class")
         try:
             bucket = self.get_bucket(bucket_name)
             file_objects = [file_object for file_object in bucket.objects.filter(Prefix=filename)]
+            if len(file_objects) == 0:
+                raise FileNotFoundError(f"File '{filename}' not found in S3 bucket '{bucket_name}'. Please ensure the model has been trained and pushed to S3.")
             func = lambda x: x[0] if len(x) == 1 else x
             file_objs = func(file_objects)
             logging.info("Exited the get_file_object method of SimpleStorageService class")
             return file_objs
+        
         except Exception as e:
             raise MyException(e, sys) from e
 
