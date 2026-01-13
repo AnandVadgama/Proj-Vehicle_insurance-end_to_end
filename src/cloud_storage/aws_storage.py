@@ -45,12 +45,12 @@ class SimpleStorageService:
             raise MyException(e, sys)
 
     @staticmethod
-    def read_object(object_name: str, decode: bool = True, make_readable: bool = False) -> Union[StringIO, str]:
+    def read_object(object_name, decode: bool = True, make_readable: bool = False) -> Union[StringIO, str]:
         """
         Reads the specified S3 object with optional decoding and formatting.
 
         Args:
-            object_name (str): The S3 object name.
+            object_name: The S3 object (or list of objects, in which case the first is used).
             decode (bool): Whether to decode the object content as a string.
             make_readable (bool): Whether to convert content to StringIO for DataFrame usage.
 
@@ -59,6 +59,12 @@ class SimpleStorageService:
         """
         # logging.info("Entered the read_object method of SimpleStorageService class")
         try:
+            # Handle case where object_name is a list
+            if isinstance(object_name, list):
+                if len(object_name) == 0:
+                    raise ValueError("Empty list of objects provided")
+                object_name = object_name[0]
+            
             # Read and decode the object content if decode=True
             func = (
                 lambda: object_name.get()["Body"].read().decode()

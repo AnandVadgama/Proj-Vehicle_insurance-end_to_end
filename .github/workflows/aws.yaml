@@ -56,12 +56,14 @@ jobs:
       - name: Run Docker Image to Serve Users
         run: |
           CONTAINER_NAME=vehicle-insurance-app
+          IMAGE_URI="${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPO }}:latest"
+          docker pull $IMAGE_URI
           # Stop & remove any running container with this name
           if [ "$(docker ps -q -f name=${CONTAINER_NAME})" != "" ]; then
             docker rm -f ${CONTAINER_NAME} || true
           fi
           # Remove any container from the previous image
-          EXISTING=$(docker ps -q --filter "ancestor=${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPO }}:latest")
+          EXISTING=$(docker ps -a -q --filter "ancestor=$IMAGE_URI")
           if [ -n "$EXISTING" ]; then docker rm -f $EXISTING || true; fi
 
           docker run -d --name ${CONTAINER_NAME} --restart unless-stopped \
@@ -69,4 +71,4 @@ jobs:
             -e AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}" \
             -e AWS_DEFAULT_REGION="${{ secrets.AWS_DEFAULT_REGION }}" \
             -e MONGODB_URL="${{ secrets.MONGODB_URL }}" \
-            -p 5080:5080 "${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPO }}:latest"
+            -p 5080:5080 "$IMAGE_URI"
