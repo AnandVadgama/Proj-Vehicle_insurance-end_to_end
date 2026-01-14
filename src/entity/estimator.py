@@ -47,7 +47,9 @@ class MyModel:
             # Map Gender column to 0 for Female and 1 for Male
             if 'Gender' in df.columns:
                 logging.info("Mapping 'Gender' column to binary values")
-                df['Gender'] = df['Gender'].map({'Female': 0, 'Male': 1}).astype(int)
+                df['Gender'] = df['Gender'].map({'Female': 0, 'Male': 1})
+                # Fill any NaN values (from unmapped values) with 0 (default to Female)
+                df['Gender'] = df['Gender'].fillna(0).astype(int)
             
             # Handle the Vehicle_Age and Vehicle_Damage columns if they come as separate columns
             # (In case the input is not pre-processed)
