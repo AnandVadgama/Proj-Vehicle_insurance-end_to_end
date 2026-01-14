@@ -1,4 +1,5 @@
 import sys
+import pandas as pd
 from src.entity.config_entity import VehiclePredictorConfig
 from src.entity.s3_estimator import Proj1Estimator
 from src.exception import MyException
@@ -55,12 +56,17 @@ class VehicleData:
 
     def get_vehicle_data_as_dict(self):
         """
-        This function returns a dictionary from VehicleData class input
+        This function returns a dictionary from VehicleData class input.
+        Returns data in the ORIGINAL format (before transformation) to match training data structure.
         """
-        logging.info("Entered get_usvisa_data_as_dict method as VehicleData class")
+        logging.info("Entered get_vehicle_data_as_dict method as VehicleData class")
 
         try:
+            # Return data in original format - the preprocessing pipeline will handle transformation
+            # Note: Vehicle_Age and Vehicle_Damage come pre-transformed as dummy columns
+            # We need to reconstruct the original categorical values
             input_data = {
+                "id": [1],  # Dummy id column (will be dropped like in training)
                 "Gender": [self.Gender],
                 "Age": [self.Age],
                 "Driving_License": [self.Driving_License],
@@ -75,6 +81,7 @@ class VehicleData:
             }
 
             logging.info("Created vehicle data dict")
+            logging.info(f"Dictionary columns: {list(input_data.keys())}")
             logging.info("Exited get_vehicle_data_as_dict method as VehicleData class")
             return input_data
 

@@ -1,5 +1,6 @@
 import os
 import sys
+import pandas as pd
 
 from pandas import DataFrame
 from sklearn.model_selection import train_test_split
@@ -24,7 +25,8 @@ class DataIngestion:
     def export_data_into_feature_store(self)->DataFrame:
         """
         Method Name :   export_data_into_feature_store
-        Description :   This method exports data from mongodb to csv file
+        Description :   This method exports data from mongodb to csv file. If MongoDB fails, 
+                       it falls back to using a local CSV file from notebook/dataset_vehicle.csv
         
         Output      :   data is returned as artifact of data ingestion components
         On Failure  :   Write an exception log and then raise an exception
@@ -43,7 +45,27 @@ class DataIngestion:
             return dataframe
 
         except Exception as e:
-            raise MyException(e,sys)
+            logging.warning(f"MongoDB connection failed: {e}")
+            logging.info("Attempting to load data from local CSV file as fallback...")
+            
+            # Fallback to local CSV file
+            local_csv_path = "notebook/dataset_vehicle.csv"
+            if os.path.exists(local_csv_path):
+                try:
+                    logging.info(f"Loading data from {local_csv_path}")
+                    dataframe = pd.read_csv(local_csv_path)
+                    logging.info(f"Successfully loaded data from local CSV. Shape: {dataframe.shape}")
+                    
+                    feature_store_file_path = self.data_ingestion_config.feature_store_file_path
+                    dir_path = os.path.dirname(feature_store_file_path)
+                    os.makedirs(dir_path, exist_ok=True)
+                    logging.info(f"Saving exported data into feature store file path: {feature_store_file_path}")
+                    dataframe.to_csv(feature_store_file_path, index=False, header=True)
+                    return dataframe
+                except Exception as fallback_error:
+                    raise MyException(fallback_error, sys)
+            else:
+                raise MyException(e, sys)
 
     def split_data_as_train_test(self,dataframe: DataFrame) ->None:
         """
