@@ -39,17 +39,19 @@ class MyModel:
             # Step 1: Apply the same transformations as during training
             df = dataframe.copy()
             
-            # Drop id column first if it exists (must be done before Gender mapping)
+            # Drop id column if it exists (for cases where data comes from other sources)
             if 'id' in df.columns:
                 logging.info("Dropping 'id' column")
                 df = df.drop('id', axis=1)
             
-            # Map Gender column to 0 for Female and 1 for Male
+            # Map Gender column to 0 for Female and 1 for Male (only if it contains string values)
             if 'Gender' in df.columns:
                 logging.info("Mapping 'Gender' column to binary values")
-                df['Gender'] = df['Gender'].map({'Female': 0, 'Male': 1})
-                # Fill any NaN values (from unmapped values) with 0 (default to Female)
-                df['Gender'] = df['Gender'].fillna(0).astype(int)
+                # Check if Gender is already numeric
+                if df['Gender'].dtype == 'object' or df['Gender'].dtype.name == 'category':
+                    df['Gender'] = df['Gender'].map({'Female': 0, 'Male': 1})
+                # Fill any NaN values and convert to int
+                df['Gender'] = pd.to_numeric(df['Gender'], errors='coerce').fillna(0).astype(int)
             
             # Handle the Vehicle_Age and Vehicle_Damage columns if they come as separate columns
             # (In case the input is not pre-processed)

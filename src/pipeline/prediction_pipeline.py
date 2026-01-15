@@ -62,11 +62,9 @@ class VehicleData:
         logging.info("Entered get_vehicle_data_as_dict method as VehicleData class")
 
         try:
-            # Return data in original format - the preprocessing pipeline will handle transformation
-            # Note: Vehicle_Age and Vehicle_Damage come pre-transformed as dummy columns
-            # We need to reconstruct the original categorical values
+            # Return data in the format expected by the preprocessing pipeline
+            # Note: 'id' column is NOT included as it was dropped during training before preprocessing
             input_data = {
-                "id": [1],  # Dummy id column (will be dropped like in training)
                 "Gender": [self.Gender],
                 "Age": [self.Age],
                 "Driving_License": [self.Driving_License],
